@@ -1,3 +1,4 @@
 build/
-docs/book.pdf
+docs/_book/
+uberfire-docs.pdf
 .DS_Store

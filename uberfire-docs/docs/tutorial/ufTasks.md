@@ -28,7 +28,7 @@ MVP (Model-View-Presenter) like any pattern is open to different interpretation,
 ##Cleaning the Archetype
 Uberfire Archetype contains some useful code samples that are not necessary in our app, so let's do some cleanup first.
 
-Please delete these files: SharedSample.java, HelloWorldScreen.java, HelloWorldScreen.ui.xml and  MainPerspective.java.
+Please delete these files: SharedSample.java, HelloWorldUberfireView.java, HelloWorldUberfireView.html and MainPerspective.java.
 
 ##Creating project structure
 
@@ -43,7 +43,7 @@ Following the MVP pattern, each Uberfire Screen will be a Presenter plus a View.
 
 Inside the package org.uberfire.client.screens, create this new source file:
 
-- ProjectsPresenter.java
+**ProjectsPresenter.java**
 
 ```
 package org.uberfire.client.screens;
@@ -93,13 +93,10 @@ Every Screen must have a @WorkbenchPartView method returning a com.google.gwt.us
 
 Let's define our view (inside org.uberfire.client.screens package):
 
-- ProjectsView.java
-
+**ProjectsView.java**
 ```
 package org.uberfire.client.screens;
 
-import org.jboss.errai.common.client.dom.Div;
-import org.jboss.errai.common.client.dom.HTMLElement;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
 import org.jboss.errai.ui.shared.api.annotations.Templated;
 import org.jboss.errai.ui.client.local.api.IsElement;
@@ -119,8 +116,7 @@ public class ProjectsView implements ProjectsPresenter.View, IsElement {
 
 }
 ```
-- ProjectsView.html
-
+**ProjectsView.html**
 ```
 <div>
     <label>Project View</label>
@@ -131,8 +127,7 @@ For now, this view only has a label with the text "Project View".
 ###Creating Tasks Screen
 Our second screen is the Task Screen. Let's create it (inside org.uberfire.client.screens package):
 
-- TasksPresenter.java
-
+**TasksPresenter.java**
 ```
 package org.uberfire.client.screens;
 
@@ -165,13 +160,11 @@ public class TasksPresenter {
     }
 }
 ```
-- TasksView.java
-
+**TasksView.java**
 ```
 package org.uberfire.client.screens;
 
 import org.jboss.errai.common.client.dom.Div;
-import org.jboss.errai.common.client.dom.HTMLElement;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
 import org.jboss.errai.ui.shared.api.annotations.Templated;
 import org.jboss.errai.ui.client.local.api.IsElement;
@@ -192,8 +185,7 @@ public class TasksView implements TasksPresenter.View, IsElement {
 
 }
 ```
-- TasksView.html
-
+**TasksView.html**
 ```
 <div>
     <label>Tasks View</label>
@@ -205,8 +197,7 @@ Now we have two Uberfire Screens, but nowhere to put them. Remember, the Uberfir
 
 We need to define a Perspective inside org.uberfire.client.perspectives:
 
-- TasksPerspective.java
-
+**TasksPerspective.java**
 ```
 package org.uberfire.client.perspectives;
 
@@ -262,9 +253,7 @@ In this definition, we’ll add a new panel on the left-hand side (WEST) and pop
 
 Inside the package org.uberfire.client, modify the setup method as follows to create a menu item in the "TaskPerspective" we just defined before (instead of the "MainPerspective"):
 
-- ShowcaseEntryPoint.java
-
-
+**ShowcaseEntryPoint.java**
 ```
 private void setupMenu( @Observes final ApplicationReadyEvent event ) {
     final Menus menus =
@@ -309,7 +298,7 @@ And our app running:
 Now that we have the basic infrastructure required for our project, it's time to put some functionality in the Project Screen. Let's begin with the ProjectsPresenter.
 
 ###ProjectsPresenter
-Here’s what ProjectsPresenter.java might look like:
+Here’s what **ProjectsPresenter.java** might look like:
 ```
 package org.uberfire.client.screens;
 
@@ -357,9 +346,9 @@ public class ProjectsPresenter {
 ```
 
 ###ProjectsView
-Our view has two components: a [Bootstrap](http://getbootstrap.com/components/#list-group) List Group to list our projects and a button to create new ones.
+Our view has two components: a [Bootstrap](https://getbootstrap.com/docs/3.3/components/#list-group) List Group to list our projects and a button to create new ones.
 
-Here’s what ProjectsView.html looks like:
+Here’s what **ProjectsView.html** looks like:
 ```
 <div>
     <ul class="list-group" data-field="projects-list">
@@ -375,8 +364,6 @@ package org.uberfire.client.screens;
 
 import com.google.gwt.user.client.Event;
 import org.jboss.errai.common.client.dom.Button;
-import org.jboss.errai.common.client.dom.Div;
-import org.jboss.errai.common.client.dom.HTMLElement;
 import org.jboss.errai.common.client.dom.UnorderedList;
 import org.jboss.errai.ui.client.local.api.IsElement;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
@@ -539,6 +526,8 @@ public class NewProjectView implements NewProjectPresenter.View {
 }
 ```
 The NewProjectView is a simple wrapper for an org.gwtbootstrap3.client.ui.Modal. The content of the modal will be implemented by NewProjectContentView. Let's create this class inside popup package:
+
+**NewProjectContentView.java**
 ```
 package org.uberfire.client.screens.popup;
 
@@ -598,7 +587,7 @@ public class NewProjectContentView implements IsElement {
 
 }
 ```
-And also, create NewProjectContentView.html:
+And also, create **NewProjectContentView.html**:
 ```
 <div>
     <form data-field="new-project-modal">
@@ -682,9 +671,7 @@ public class Project {
     }
 }
 ```
-Next, when the method createNewProject(project) is called, let's create a new model for that project and update the view. Add the following code to ProjectsPresenter.java:
-
-**ProjectsPresenter.java**
+Next, when the method createNewProject(project) is called, let's create a new model for that project and update the view. Add the following code to **ProjectsPresenter.java**:
 ```
 import org.uberfire.shared.model.Project;
 import java.util.ArrayList;
@@ -706,13 +693,13 @@ import java.util.List;
         }
     }
 ```
-Now it's time to place this new projects in our view. In order to do that let's create an Errai UI template in package widgets called ProjectItem.java:
+Now it's time to place this new projects in our view. In order to do that let's create an Errai UI template in package widgets:
 
+**ProjectItem.java**
 ```
 package org.uberfire.client.screens.widgets;
 
 import org.jboss.errai.ui.client.local.api.IsElement;
-import org.jboss.errai.common.client.dom.HTMLElement;
 import org.jboss.errai.common.client.dom.ListItem;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
 import org.jboss.errai.ui.shared.api.annotations.Templated;
@@ -740,13 +727,13 @@ public class ProjectItem implements IsElement {
 
 }
 ```
-And its html template, called ProjectItem.html
+And its html template, called **ProjectItem.html**:
 ```
 <li data-field="project" class="list-group-item">
 
 </li>
 ```
-Let's create this widget in ProjectsView. Add the following code to ProjectsView.java:
+Let's create this widget in ProjectsView. Add the following code to **ProjectsView.java**:
 ```
 @Inject
 ManagedInstance<ProjectItem> projects;
@@ -859,9 +846,9 @@ Our next step is to create a new folder button. A folder is an aggregator of tas
     </button>
 </div>
 ```
-Errai UI templates, can have their own CSS definitions. Let's create one for TasksView.html? Create TaskView.css file inside screens package:
+Errai UI templates, can have their own CSS definitions. Let's create one for TasksView.html. Create **TaskView.css** file inside screens package:
 ```
-[data-field='projects-view'] [data-field='new-project'] {
+[data-field='new-project'] {
   float: right;
   margin-right: 5px
 }
@@ -1000,7 +987,6 @@ import com.google.gwt.core.client.GWT;
 import org.gwtbootstrap3.client.ui.Modal;
 import org.gwtbootstrap3.client.ui.ModalBody;
 import org.jboss.errai.common.client.ui.ElementWrapperWidget;
-import org.jboss.errai.ui.shared.api.annotations.Templated;
 
 import javax.inject.Inject;
 
@@ -1049,8 +1035,6 @@ package org.uberfire.client.screens.popup;
 
 import com.google.gwt.user.client.Event;
 import org.jboss.errai.common.client.dom.Button;
-import org.jboss.errai.common.client.dom.Div;
-import org.jboss.errai.common.client.dom.HTMLElement;
 import org.jboss.errai.common.client.dom.Input;
 import org.jboss.errai.ui.client.local.api.IsElement;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
@@ -1098,6 +1082,7 @@ public class NewFolderContentView implements IsElement {
         addFolder.execute( folderNameTextBox.getValue() );
     }
 
+    @SinkNative( Event.ONCLICK )
     @EventHandler( "cancel-button" )
     public void cancel( Event event ) {
         cancel.execute();
@@ -1106,7 +1091,7 @@ public class NewFolderContentView implements IsElement {
 }
 
 ```
-NewFolderContentView.html
+**NewFolderContentView.html**
 ```
 <div>
     <form data-field="new-folder-modal">
@@ -1133,7 +1118,6 @@ It's time to add some tasks to our project. At this point, you're probably very 
 Let's begin by creating a model class (package org.uberfire.shared.model):
 
 **Folder.java**
-
 ```
 package org.uberfire.shared.model;
 
@@ -1303,7 +1287,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import org.jboss.errai.common.client.dom.Button;
 import org.jboss.errai.common.client.dom.Div;
 import org.jboss.errai.common.client.dom.Document;
-import org.jboss.errai.common.client.dom.HTMLElement;
 import org.jboss.errai.ioc.client.api.ManagedInstance;
 import org.jboss.errai.ui.client.local.api.IsElement;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
@@ -1386,7 +1369,7 @@ public class TasksView implements TasksPresenter.View, IsElement {
 Pay attention to the method newFolder(folderName, numberOfTasks, tasksList), because here is where we create folder items and their tasks.
 
 We also have to create at widgets package a FolderItem template in order to display our folders:
-***FolderItem.java***
+**FolderItem.java**
 ```
 package org.uberfire.client.screens.widgets;
 
@@ -1449,7 +1432,7 @@ public class FolderItem implements IsElement {
 }
 ```
 
-***FolderItem.html***
+**FolderItem.html**
 ```
 <ul data-field="folder" class="list-group">
     <li class="list-group-item list-group-item-info">
@@ -1470,13 +1453,11 @@ public class FolderItem implements IsElement {
 ```
 A Folder Item, has Tasks Items:
 
-
-*TaskItem.java
+**TaskItem.java**
 ```
 package org.uberfire.client.screens.widgets;
 
 import org.jboss.errai.ui.client.local.api.IsElement;
-import org.jboss.errai.common.client.dom.HTMLElement;
 import org.jboss.errai.common.client.dom.Input;
 import org.jboss.errai.common.client.dom.ListItem;
 import org.jboss.errai.common.client.dom.Span;
@@ -1511,8 +1492,7 @@ public class TaskItem implements IsElement {
 }
 ```
 
-***TaskItem.html***
-
+**TaskItem.html**
 ```
 <li data-field="task" class="list-group-item">
     <label class="checkbox-inline">
@@ -1576,6 +1556,7 @@ This class has one presenter (DashboardPresenter) and note that it is a little b
 ###DashboardPresenter
 On org.uberfire.client.screens package:
 
+**DashboardPresenter.java**
 ```
 package org.uberfire.client.screens;
 
@@ -1692,6 +1673,8 @@ This presenter has a Map and a utility class to keep track of tasks created and 
 There are two observer methods listening for task events. Let's create these event classes.
 
 On org.uberfire.shared.events package:
+
+**TaskCreated.java**
 ```
 package org.uberfire.shared.events;
 
@@ -1715,7 +1698,7 @@ public class TaskCreated {
     }
 }
 ```
-And an event class for TaskDone:
+**TaskDone.java**
 ```
 package org.uberfire.shared.events;
 
@@ -1783,7 +1766,6 @@ Now it's time to create our view classes (org.uberfire.client.screens package):
 package org.uberfire.client.screens;
 
 import org.jboss.errai.common.client.dom.Div;
-import org.jboss.errai.common.client.dom.HTMLElement;
 import org.jboss.errai.ioc.client.api.ManagedInstance;
 import org.jboss.errai.ui.client.local.api.IsElement;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
@@ -1903,7 +1885,7 @@ public class DashboardItem implements IsElement {
 ```
 
 ###Create Perspective Menu
-Now it's time to put this work on our app menu. Open ShowcaseEntryPoint.java and update method setupMenu(event):
+Now it's time to put this work on our app menu. Open **ShowcaseEntryPoint.java** and update method setupMenu(event):
 
 ```
     private void setupMenu( @Observes final ApplicationReadyEvent event ) {
