@@ -65,4 +65,9 @@ public class ChildMenuItemView implements IsElement,
     public void select() {
         item.getClassList().add("active");
     }
+
+    @Override
+    public void unselect() {
+        item.getClassList().remove("active");
+    }
 }

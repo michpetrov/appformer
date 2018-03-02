@@ -112,6 +112,7 @@ public class WorkbenchMegaMenuPresenter extends WorkbenchBaseMenuPresenter {
     private ManagedInstance<ChildContextMenuItemPresenter> childContextMenuItemPresenters;
     private ManagedInstance<GroupContextMenuItemPresenter> groupContextMenuItemPresenters;
     private Workbench workbench;
+    private Selectable selectedItemPresenter;
 
     Map<String, Selectable> selectableMenuItemByIdentifier = new HashMap<>();
     Map<String, HasChildren> hasChildrenMenuItemByIdentifier = new HashMap<>();
@@ -249,7 +250,11 @@ public class WorkbenchMegaMenuPresenter extends WorkbenchBaseMenuPresenter {
     public void selectMenuItem(final String id) {
         final Selectable itemPresenter = selectableMenuItemByIdentifier.get(id);
         if (itemPresenter != null) {
-            itemPresenter.select();
+            if (selectedItemPresenter != null) {
+                selectedItemPresenter.unselect();
+            }
+            selectedItemPresenter = itemPresenter;
+            selectedItemPresenter.select();
         }
     }
 

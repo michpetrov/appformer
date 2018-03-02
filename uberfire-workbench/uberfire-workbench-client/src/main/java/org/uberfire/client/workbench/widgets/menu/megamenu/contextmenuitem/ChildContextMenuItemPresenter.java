@@ -42,6 +42,8 @@ public class ChildContextMenuItemPresenter implements BaseMenuItemPresenter,
         void pullRight();
 
         void select();
+
+        void unselect();
     }
 
     private View view;
@@ -69,6 +71,11 @@ public class ChildContextMenuItemPresenter implements BaseMenuItemPresenter,
     @Override
     public void select() {
         view.select();
+    }
+
+    @Override
+    public void unselect() {
+        view.unselect();
     }
 
     @Override

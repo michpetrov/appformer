@@ -40,6 +40,8 @@ public class ChildMenuItemPresenter implements BaseMenuItemPresenter,
         void disable();
 
         void select();
+
+        void unselect();
     }
 
     private View view;
@@ -67,6 +69,11 @@ public class ChildMenuItemPresenter implements BaseMenuItemPresenter,
     @Override
     public void select() {
         view.select();
+    }
+
+    @Override
+    public void unselect() {
+        view.unselect();
     }
 
     @Override

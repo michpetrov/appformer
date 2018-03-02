@@ -42,6 +42,8 @@ public class IconMenuItemPresenter implements BaseMenuItemPresenter,
         void disable();
 
         void select();
+
+        void unselect();
     }
 
     private View view;
@@ -71,6 +73,11 @@ public class IconMenuItemPresenter implements BaseMenuItemPresenter,
     @Override
     public void select() {
         view.select();
+    }
+
+    @Override
+    public void unselect() {
+        view.unselect();
     }
 
     @Override

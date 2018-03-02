@@ -19,4 +19,5 @@ package org.uberfire.client.workbench.widgets.menu.megamenu.base;
 public interface Selectable extends BaseMenuItemPresenter {
 
     void select();
+    void unselect();
 }
